@@ -1,6 +1,7 @@
-import { useState, React } from 'react'
+import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import PropTypes from 'prop-types';
 
 function TodoForm(props) {
   const [input, setInput] = useState('')
@@ -16,26 +17,31 @@ function TodoForm(props) {
       text: input,
       completed: false,
     }
-
     props.onSubmit(newTodo)
+    setInput('')
   }
 
   return (
     <form
-      className="flex flex-wrap justify-center items-center"
-      onSubmit={handleSend}
-    >
+      className="flex flex-wrap justify-end items-center relative"
+      onSubmit={handleSend}>
       <input
         required
         type="text"
-        className="w-[442px] p-4 rounded-tl-lg rounded-bl-lg outline-none bg-white text-lg border-2 border-secondary text-gray-600"
-        placeholder="Enter a task"
+        className="w-full p-4 rounded-lg outline-none bg-white text-lg border-2 border-secondary text-gray-600"
+        placeholder="Start writing your task..."
         name="text"
-        onChange={handleChange}
-      />
-      <button className="p-5 bg-terciary rounded-tr rounded-br border-none"><AiOutlinePlusCircle className='size-6' /></button>
+        value={input}
+        onChange={handleChange}/>
+      <button className="p-5 bg-terciary rounded-tr-lg rounded-br-lg border-none absolute">
+        <AiOutlinePlusCircle className='size-6' />
+      </button>
     </form>
   )
 }
+
+TodoForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
 
 export { TodoForm }
